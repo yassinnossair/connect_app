@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1093960089836",
+    "project_id": "connect-final-199ec",
+    "storage_bucket": "connect-final-199ec.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093960089836:android:b6ac563e279e3a9e9225c9",
+        "android_client_info": {
+          "package_name": "com.example.connect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB18j8-txhCOELUUm15rwr1jF5SONPTKHI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
