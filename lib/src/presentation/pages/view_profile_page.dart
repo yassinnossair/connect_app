@@ -5,15 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart'; // NEW: Import url_launcher
 
 // NEW: Import the BLoCs and Repositories we need.
-import 'package:connect/src/domain/repositories/auth_repository.dart';
-import 'package:connect/src/domain/repositories/profile_repository.dart';
 import 'package:connect/src/presentation/bloc/profile/profile_bloc.dart';
-import 'package:connect/src/presentation/bloc/profile/profile_event.dart';
 import 'package:connect/src/presentation/bloc/profile/profile_state.dart';
 
 // This page provides the ProfileBloc.
 // NEW CODE for all 3 files
-class ViewProfilePage extends StatelessWidget { // Or ViewProfilePage, or QrCodePage
+class ViewProfilePage extends StatelessWidget {
+  // Or ViewProfilePage, or QrCodePage
   const ViewProfilePage({super.key});
 
   @override
@@ -22,7 +20,6 @@ class ViewProfilePage extends StatelessWidget { // Or ViewProfilePage, or QrCode
     return const ViewProfileView(); // Or ViewProfileView, or QrCodeView
   }
 }
-
 
 // This widget builds the UI based on the ProfileBloc's state.
 class ViewProfileView extends StatelessWidget {
@@ -40,9 +37,7 @@ class ViewProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Profile Preview'),
-      ),
+      appBar: AppBar(title: const Text('My Profile Preview')),
       backgroundColor: Colors.grey[100],
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
@@ -55,7 +50,10 @@ class ViewProfileView extends StatelessWidget {
 
           return Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(
+                vertical: 24.0,
+                horizontal: 16.0,
+              ),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 500),
                 child: Card(
@@ -98,7 +96,8 @@ class ViewProfileView extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                         const SizedBox(height: 4),
-                        if (profile.company != null && profile.company!.isNotEmpty)
+                        if (profile.company != null &&
+                            profile.company!.isNotEmpty)
                           Text(
                             profile.company!,
                             style: const TextStyle(

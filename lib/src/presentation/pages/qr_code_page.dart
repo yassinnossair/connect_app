@@ -5,18 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart'; // NEW: Import qr_flutter
 
 // NEW: Import the BLoCs and Repositories we need.
-import 'package:connect/src/domain/repositories/auth_repository.dart';
-import 'package:connect/src/domain/repositories/profile_repository.dart';
 import 'package:connect/src/presentation/bloc/auth/auth_bloc.dart';
 import 'package:connect/src/presentation/bloc/auth/auth_state.dart';
 import 'package:connect/src/presentation/bloc/profile/profile_bloc.dart';
-import 'package:connect/src/presentation/bloc/profile/profile_event.dart';
 import 'package:connect/src/presentation/bloc/profile/profile_state.dart';
-
 
 // The page is now wrapped in a BlocProvider to create the ProfileBloc.
 // NEW CODE for all 3 files
-class QrCodePage extends StatelessWidget { // Or ViewProfilePage, or QrCodePage
+class QrCodePage extends StatelessWidget {
+  // Or ViewProfilePage, or QrCodePage
   const QrCodePage({super.key});
 
   @override
@@ -26,16 +23,13 @@ class QrCodePage extends StatelessWidget { // Or ViewProfilePage, or QrCodePage
   }
 }
 
-
 class QrCodeView extends StatelessWidget {
   const QrCodeView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('My QR Code'),
-      ),
+      appBar: AppBar(title: const Text('My QR Code')),
       backgroundColor: Colors.grey[200],
       // We use a BlocBuilder on the AuthBloc to get the user's ID.
       body: BlocBuilder<AuthBloc, AuthState>(
@@ -73,22 +67,23 @@ class QrCodeView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40.0),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24.0,
+                        vertical: 40.0,
+                      ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             'Share Your Profile',
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             'Others can scan this code to connect.',
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: Colors.grey.shade600,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(color: Colors.grey.shade600),
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 32),
@@ -97,7 +92,10 @@ class QrCodeView extends StatelessWidget {
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              border: Border.all(color: Colors.grey.shade300, width: 1),
+                              border: Border.all(
+                                color: Colors.grey.shade300,
+                                width: 1,
+                              ),
                               borderRadius: BorderRadius.circular(16),
                             ),
                             child: QrImageView(

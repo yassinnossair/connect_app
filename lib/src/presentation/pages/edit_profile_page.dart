@@ -4,16 +4,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:connect/src/domain/models/user_profile.dart';
-import 'package:connect/src/domain/repositories/auth_repository.dart';
-import 'package:connect/src/domain/repositories/profile_repository.dart';
 import 'package:connect/src/presentation/bloc/profile/profile_bloc.dart';
 import 'package:connect/src/presentation/bloc/profile/profile_event.dart';
 import 'package:connect/src/presentation/bloc/profile/profile_state.dart';
 
-
 // NEW CODE for all 3 files
-class EditProfilePage extends StatelessWidget { // Or ViewProfilePage, or QrCodePage
+class EditProfilePage extends StatelessWidget {
+  // Or ViewProfilePage, or QrCodePage
   const EditProfilePage({super.key});
 
   @override
@@ -55,7 +52,7 @@ class _EditProfileViewState extends State<EditProfileView> {
       // 1. Show SnackBars for save success/failure.
       // 2. Update the text controllers when the selected profile changes.
       listenWhen: (previous, current) =>
-      previous.status != current.status ||
+          previous.status != current.status ||
           previous.selectedProfileId != current.selectedProfileId,
       listener: (context, state) {
         if (state.status == ProfileStatus.success) {
@@ -87,7 +84,6 @@ class _EditProfileViewState extends State<EditProfileView> {
       },
       child: Scaffold(
         appBar: AppBar(
-
           title: const Text('Edit Profile'),
           actions: [
             // NEW: Button to create a new profile.
@@ -99,21 +95,23 @@ class _EditProfileViewState extends State<EditProfileView> {
               builder: (context, state) {
                 return state.status == ProfileStatus.loading
                     ? const Padding(
-                  padding: EdgeInsets.only(right: 16.0),
-                  child: Center(
-                    child: SizedBox(
-                      height: 24,
-                      width: 24,
-                      child: CircularProgressIndicator(color: Colors.white),
-                    ),
-                  ),
-                )
+                        padding: EdgeInsets.only(right: 16.0),
+                        child: Center(
+                          child: SizedBox(
+                            height: 24,
+                            width: 24,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      )
                     : IconButton(
-                  icon: const Icon(Icons.save),
-                  onPressed: () {
-                    context.read<ProfileBloc>().add(ProfileSaved());
-                  },
-                );
+                        icon: const Icon(Icons.save),
+                        onPressed: () {
+                          context.read<ProfileBloc>().add(ProfileSaved());
+                        },
+                      );
               },
             ),
           ],
@@ -145,22 +143,25 @@ class _EditProfileViewState extends State<EditProfileView> {
                     _buildTextField(
                       label: 'Profile Name',
                       controller: _nameController,
-                      onChanged: (value) =>
-                          context.read<ProfileBloc>().add(ProfileNameChanged(value)),
+                      onChanged: (value) => context.read<ProfileBloc>().add(
+                        ProfileNameChanged(value),
+                      ),
                     ),
                     const SizedBox(height: 16),
                     _buildTextField(
                       label: 'Title',
                       controller: _titleController,
-                      onChanged: (value) =>
-                          context.read<ProfileBloc>().add(ProfileTitleChanged(value)),
+                      onChanged: (value) => context.read<ProfileBloc>().add(
+                        ProfileTitleChanged(value),
+                      ),
                     ),
                     const SizedBox(height: 16),
                     _buildTextField(
                       label: 'Company',
                       controller: _companyController,
-                      onChanged: (value) =>
-                          context.read<ProfileBloc>().add(ProfileCompanyChanged(value)),
+                      onChanged: (value) => context.read<ProfileBloc>().add(
+                        ProfileCompanyChanged(value),
+                      ),
                     ),
                     const SizedBox(height: 24),
                     const Divider(),
@@ -189,9 +190,7 @@ class _EditProfileViewState extends State<EditProfileView> {
       onChanged: onChanged,
       decoration: InputDecoration(
         labelText: label,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
   }
@@ -206,7 +205,9 @@ class _EditProfileViewState extends State<EditProfileView> {
           title: const Text('Create New Profile'),
           content: TextField(
             controller: nameController,
-            decoration: const InputDecoration(labelText: 'Profile Name (e.g., Freelance)'),
+            decoration: const InputDecoration(
+              labelText: 'Profile Name (e.g., Freelance)',
+            ),
           ),
           actions: [
             TextButton(
@@ -216,9 +217,9 @@ class _EditProfileViewState extends State<EditProfileView> {
             ElevatedButton(
               onPressed: () {
                 if (nameController.text.isNotEmpty) {
-                  blocContext
-                      .read<ProfileBloc>()
-                      .add(ProfileCreated(name: nameController.text));
+                  blocContext.read<ProfileBloc>().add(
+                    ProfileCreated(name: nameController.text),
+                  );
                   Navigator.of(dialogContext).pop();
                 }
               },
@@ -245,9 +246,7 @@ class _ProfileSelectorDropdown extends StatelessWidget {
           value: state.selectedProfileId,
           decoration: InputDecoration(
             labelText: 'Active Profile',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
           items: state.profiles.map((profile) {
             return DropdownMenuItem<String>(
@@ -265,7 +264,6 @@ class _ProfileSelectorDropdown extends StatelessWidget {
     );
   }
 }
-
 
 class _ProfileAvatar extends StatelessWidget {
   const _ProfileAvatar();
@@ -295,11 +293,15 @@ class _ProfileAvatar extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () async {
                     final picker = ImagePicker();
-                    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                    final pickedFile = await picker.pickImage(
+                      source: ImageSource.gallery,
+                    );
 
                     if (pickedFile != null && context.mounted) {
                       final imageFile = File(pickedFile.path);
-                      context.read<ProfileBloc>().add(ProfilePictureChanged(imageFile));
+                      context.read<ProfileBloc>().add(
+                        ProfilePictureChanged(imageFile),
+                      );
                     }
                   },
                   child: CircleAvatar(
@@ -317,7 +319,6 @@ class _ProfileAvatar extends StatelessWidget {
   }
 }
 
-
 class _ProfessionalLinksSection extends StatelessWidget {
   const _ProfessionalLinksSection({required this.links});
 
@@ -329,24 +330,21 @@ class _ProfessionalLinksSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Professional Links',
-          style: theme.textTheme.titleLarge,
-        ),
+        Text('Professional Links', style: theme.textTheme.titleLarge),
         const SizedBox(height: 8),
         links.isEmpty
             ? Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24.0),
-            child: Text(
-              'No links yet.',
-              style: TextStyle(color: Colors.grey.shade600),
-            ),
-          ),
-        )
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24.0),
+                  child: Text(
+                    'No links yet.',
+                    style: TextStyle(color: Colors.grey.shade600),
+                  ),
+                ),
+              )
             : Column(
-          children: links.map((link) => _LinkTile(link: link)).toList(),
-        ),
+                children: links.map((link) => _LinkTile(link: link)).toList(),
+              ),
         const SizedBox(height: 8),
         Align(
           alignment: Alignment.centerRight,
@@ -421,7 +419,9 @@ class _AddLinkDialogState extends State<_AddLinkDialog> {
         children: [
           TextField(
             controller: _typeController,
-            decoration: const InputDecoration(labelText: 'Type (e.g., LinkedIn)'),
+            decoration: const InputDecoration(
+              labelText: 'Type (e.g., LinkedIn)',
+            ),
             textCapitalization: TextCapitalization.words,
           ),
           TextField(
