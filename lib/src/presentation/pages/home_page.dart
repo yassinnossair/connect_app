@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userEmail = context.select((AuthBloc bloc) {
+    context.select((AuthBloc bloc) {
       final state = bloc.state;
       if (state is Authenticated) {
         return state.user.email;
@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
             onPressed: () {
               context.read<AuthBloc>().add(AuthLogoutRequested());
             },
-          )
+          ),
         ],
       ),
       body: Padding(
@@ -115,14 +115,11 @@ class HomePage extends StatelessWidget {
       icon: Icon(icon),
       label: Text(label),
       style: ElevatedButton.styleFrom(
-        backgroundColor:
-        isPrimary ? Theme.of(context).primaryColor : null,
+        backgroundColor: isPrimary ? Theme.of(context).primaryColor : null,
         foregroundColor: isPrimary ? Colors.white : null,
         padding: const EdgeInsets.symmetric(vertical: 16),
         textStyle: Theme.of(context).textTheme.titleMedium,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
       onPressed: onPressed,
     );
