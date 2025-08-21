@@ -1,13 +1,12 @@
 // lib/src/data/repositories/auth_repository_impl.dart
 
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-import 'package:connect/src/data/repositories/auth_exceptions.dart';
+import 'package:connect/src/data/exceptions/auth_exceptions.dart';
 import 'package:connect/src/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl({
-    firebase_auth.FirebaseAuth? firebaseAuth,
-  }) : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
+  AuthRepositoryImpl({firebase_auth.FirebaseAuth? firebaseAuth})
+    : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
 
   final firebase_auth.FirebaseAuth _firebaseAuth;
 

@@ -6,7 +6,7 @@ import 'package:connect/src/domain/models/connection.dart';
 import 'package:connect/src/domain/models/connection_request.dart';
 import 'package:connect/src/domain/repositories/auth_repository.dart';
 import 'package:connect/src/domain/repositories/connection_repository.dart';
-import 'package:connect/src/data/repositories/connection_exceptions.dart';
+import 'package:connect/src/data/exceptions/connection_exceptions.dart';
 import 'package:connect/src/presentation/bloc/connection/connection_event.dart';
 import 'package:connect/src/presentation/bloc/connection/connection_state.dart';
 import 'package:connect/src/presentation/bloc/profile/profile_bloc.dart';
@@ -16,13 +16,14 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
     required ConnectionRepository connectionRepository,
     required ProfileBloc profileBloc,
     required AuthRepository authRepository,
-  })  : _connectionRepository = connectionRepository,
-        _profileBloc = profileBloc,
-        _authRepository = authRepository,
-        super(const ConnectionState()) {
+  }) : _connectionRepository = connectionRepository,
+       _profileBloc = profileBloc,
+       _authRepository = authRepository,
+       super(const ConnectionState()) {
     on<ConnectionRequestSent>(_onConnectionRequestSent);
     on<IncomingRequestsSubscriptionRequested>(
-        _onIncomingRequestsSubscriptionRequested);
+      _onIncomingRequestsSubscriptionRequested,
+    );
     on<ConnectionRequestAccepted>(_onConnectionRequestAccepted);
     on<ConnectionRequestDeclined>(_onConnectionRequestDeclined);
     on<ConnectionsSubscriptionRequested>(_onConnectionsSubscriptionRequested);
@@ -33,9 +34,9 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
   final AuthRepository _authRepository;
 
   Future<void> _onConnectionRequestSent(
-      ConnectionRequestSent event,
-      Emitter<ConnectionState> emit,
-      ) async {
+    ConnectionRequestSent event,
+    Emitter<ConnectionState> emit,
+  ) async {
     emit(state.copyWith(status: ConnectionStatus.loading));
     try {
       final user = await _authRepository.user.first;
@@ -53,17 +54,19 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
       );
       emit(state.copyWith(status: ConnectionStatus.success));
     } catch (e) {
-      emit(state.copyWith(
-        status: ConnectionStatus.failure,
-        errorMessage: e is ConnectionException ? e.message : e.toString(),
-      ));
+      emit(
+        state.copyWith(
+          status: ConnectionStatus.failure,
+          errorMessage: e is ConnectionException ? e.message : e.toString(),
+        ),
+      );
     }
   }
 
   Future<void> _onIncomingRequestsSubscriptionRequested(
-      IncomingRequestsSubscriptionRequested event,
-      Emitter<ConnectionState> emit,
-      ) async {
+    IncomingRequestsSubscriptionRequested event,
+    Emitter<ConnectionState> emit,
+  ) async {
     emit(state.copyWith(status: ConnectionStatus.loading));
     final user = await _authRepository.user.first;
     if (user == null) {
@@ -79,41 +82,49 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
       ),
       onError: (error, __) => state.copyWith(
         status: ConnectionStatus.failure,
-        errorMessage: error is ConnectionException ? error.message : error.toString(),
+        errorMessage: error is ConnectionException
+            ? error.message
+            : error.toString(),
       ),
     );
   }
 
   Future<void> _onConnectionRequestAccepted(
-      ConnectionRequestAccepted event,
-      Emitter<ConnectionState> emit,
-      ) async {
+    ConnectionRequestAccepted event,
+    Emitter<ConnectionState> emit,
+  ) async {
     try {
       await _connectionRepository.acceptRequest(request: event.request);
     } catch (e) {
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           status: ConnectionStatus.failure,
-          errorMessage: e is ConnectionException ? e.message : e.toString()));
+          errorMessage: e is ConnectionException ? e.message : e.toString(),
+        ),
+      );
     }
   }
 
   Future<void> _onConnectionRequestDeclined(
-      ConnectionRequestDeclined event,
-      Emitter<ConnectionState> emit,
-      ) async {
+    ConnectionRequestDeclined event,
+    Emitter<ConnectionState> emit,
+  ) async {
     try {
       await _connectionRepository.declineRequest(requestId: event.requestId);
     } catch (e) {
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           status: ConnectionStatus.failure,
-          errorMessage: e is ConnectionException ? e.message : e.toString()));
+          errorMessage: e is ConnectionException ? e.message : e.toString(),
+        ),
+      );
     }
   }
 
   Future<void> _onConnectionsSubscriptionRequested(
-      ConnectionsSubscriptionRequested event,
-      Emitter<ConnectionState> emit,
-      ) async {
+    ConnectionsSubscriptionRequested event,
+    Emitter<ConnectionState> emit,
+  ) async {
     emit(state.copyWith(status: ConnectionStatus.loading));
     final user = await _authRepository.user.first;
     if (user == null) {
@@ -129,7 +140,9 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
       ),
       onError: (error, __) => state.copyWith(
         status: ConnectionStatus.failure,
-        errorMessage: error is ConnectionException ? error.message : error.toString(),
+        errorMessage: error is ConnectionException
+            ? error.message
+            : error.toString(),
       ),
     );
   }

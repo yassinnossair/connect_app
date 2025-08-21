@@ -1,14 +1,9 @@
-/// A collection of custom exception classes for handling authentication errors.
-/// These are used to provide more specific error information to the BLoC and UI layers.
-
-/// Thrown during the sign-up process if an error occurs.
+//lib/src/data/repositories/auth_exceptions.dart
 class SignUpWithEmailAndPasswordFailure implements Exception {
   const SignUpWithEmailAndPasswordFailure([
     this.message = 'An unknown exception occurred.',
   ]);
 
-  /// Create an authentication message
-  /// from a firebase authentication exception code.
   factory SignUpWithEmailAndPasswordFailure.fromCode(String code) {
     switch (code) {
       case 'invalid-email':
@@ -36,18 +31,14 @@ class SignUpWithEmailAndPasswordFailure implements Exception {
     }
   }
 
-  /// The associated error message.
   final String message;
 }
 
-/// Thrown during the login process if an error occurs.
 class LogInWithEmailAndPasswordFailure implements Exception {
   const LogInWithEmailAndPasswordFailure([
     this.message = 'An unknown exception occurred.',
   ]);
 
-  /// Create an authentication message
-  /// from a firebase authentication exception code.
   factory LogInWithEmailAndPasswordFailure.fromCode(String code) {
     switch (code) {
       case 'invalid-email':
@@ -71,14 +62,9 @@ class LogInWithEmailAndPasswordFailure implements Exception {
     }
   }
 
-  /// The associated error message.
   final String message;
 }
 
-
-
-/// Thrown during the password reset process if an error occurs.
 class SendPasswordResetEmailFailure implements Exception {}
 
-/// Thrown during the sign-out process if an error occurs.
 class LogOutFailure implements Exception {}
