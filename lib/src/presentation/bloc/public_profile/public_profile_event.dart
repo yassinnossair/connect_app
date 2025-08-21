@@ -9,7 +9,6 @@ abstract class PublicProfileEvent extends Equatable {
   List<Object> get props => [];
 }
 
-/// Event fired to fetch the profiles for a specific user ID.
 class PublicProfileFetched extends PublicProfileEvent {
   const PublicProfileFetched({required this.userId});
   final String userId;

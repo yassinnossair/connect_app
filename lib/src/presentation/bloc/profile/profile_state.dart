@@ -9,18 +9,16 @@ enum ProfileStatus { initial, loading, success, failure }
 
 @freezed
 class ProfileState with _$ProfileState {
-  const ProfileState._(); // Private constructor for getters
+  const ProfileState._();
 
   const factory ProfileState({
-    // REFACTORED: We now hold a list of all profiles.
     @Default([]) List<UserProfile> profiles,
-    // NEW: We keep track of the selected profile's ID.
+
     String? selectedProfileId,
-    // The status of the page.
+
     @Default(ProfileStatus.initial) ProfileStatus status,
   }) = _ProfileState;
 
-  // NEW: A convenience getter to easily find the selected profile object.
   UserProfile? get selectedProfile {
     if (selectedProfileId == null) return null;
     try {

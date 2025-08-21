@@ -12,7 +12,6 @@ abstract class ProfileEvent extends Equatable {
 
 class ProfileFetched extends ProfileEvent {}
 
-// NEW: Event to select a different profile from the list.
 class ProfileSelected extends ProfileEvent {
   const ProfileSelected(this.profileId);
   final String profileId;
@@ -21,7 +20,6 @@ class ProfileSelected extends ProfileEvent {
   List<Object> get props => [profileId];
 }
 
-// NEW: Event to trigger creating a new profile.
 class ProfileCreated extends ProfileEvent {
   const ProfileCreated({required this.name});
   final String name;

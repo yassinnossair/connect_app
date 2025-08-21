@@ -2,7 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'signup_state.freezed.dart';
 
-// The status can now only be initial or loading.
 enum SignUpStatus { initial, loading }
 
 @freezed
