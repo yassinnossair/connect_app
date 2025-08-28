@@ -8,21 +8,15 @@ import 'package:connect/src/presentation/bloc/profile/profile_bloc.dart';
 import 'package:connect/src/presentation/bloc/profile/profile_event.dart';
 import 'package:connect/src/presentation/bloc/profile/profile_state.dart';
 
-// NEW CODE for all 3 files
 class EditProfilePage extends StatelessWidget {
-  // Or ViewProfilePage, or QrCodePage
   const EditProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // The BlocProvider is gone. We just return the View widget directly.
-    return const EditProfileView(); // Or ViewProfileView, or QrCodeView
+    return const EditProfileView();
   }
 }
 
-// REFACTORED: Converted to a StatefulWidget to handle TextEditingControllers.
-// This is crucial for allowing the form fields to be updated when the user
-// switches between profiles.
 class EditProfileView extends StatefulWidget {
   const EditProfileView({super.key});
 
@@ -31,14 +25,12 @@ class EditProfileView extends StatefulWidget {
 }
 
 class _EditProfileViewState extends State<EditProfileView> {
-  // Create controllers for each text field.
   final _nameController = TextEditingController();
   final _titleController = TextEditingController();
   final _companyController = TextEditingController();
 
   @override
   void dispose() {
-    // It's important to dispose of controllers to free up resources.
     _nameController.dispose();
     _titleController.dispose();
     _companyController.dispose();
@@ -48,9 +40,6 @@ class _EditProfileViewState extends State<EditProfileView> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ProfileBloc, ProfileState>(
-      // This listener now has two jobs:
-      // 1. Show SnackBars for save success/failure.
-      // 2. Update the text controllers when the selected profile changes.
       listenWhen: (previous, current) =>
           previous.status != current.status ||
           previous.selectedProfileId != current.selectedProfileId,
@@ -75,7 +64,6 @@ class _EditProfileViewState extends State<EditProfileView> {
             );
         }
 
-        // When the selected profile changes, update the text fields.
         if (state.selectedProfile != null) {
           _nameController.text = state.selectedProfile!.name;
           _titleController.text = state.selectedProfile!.title ?? '';
@@ -86,7 +74,6 @@ class _EditProfileViewState extends State<EditProfileView> {
         appBar: AppBar(
           title: const Text('Edit Profile'),
           actions: [
-            // NEW: Button to create a new profile.
             IconButton(
               icon: const Icon(Icons.add_box_outlined),
               onPressed: () => _showCreateProfileDialog(context),
@@ -118,7 +105,6 @@ class _EditProfileViewState extends State<EditProfileView> {
         ),
         body: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
-            // Use selectedProfile which is a getter in our state.
             final selectedProfile = state.selectedProfile;
 
             if (selectedProfile == null) {
@@ -134,12 +120,12 @@ class _EditProfileViewState extends State<EditProfileView> {
                     const SizedBox(height: 20),
                     const _ProfileAvatar(),
                     const SizedBox(height: 24),
-                    // NEW: Dropdown to switch between profiles.
+
                     const _ProfileSelectorDropdown(),
                     const SizedBox(height: 24),
                     const Divider(),
                     const SizedBox(height: 24),
-                    // REFACTORED: TextFields now use controllers.
+
                     _buildTextField(
                       label: 'Profile Name',
                       controller: _nameController,
@@ -179,7 +165,6 @@ class _EditProfileViewState extends State<EditProfileView> {
     );
   }
 
-  // REFACTORED: Helper now takes a controller and an onChanged callback.
   Widget _buildTextField({
     required String label,
     required TextEditingController controller,
@@ -195,7 +180,6 @@ class _EditProfileViewState extends State<EditProfileView> {
     );
   }
 
-  // NEW: Method to show the 'Create Profile' dialog.
   void _showCreateProfileDialog(BuildContext blocContext) {
     final nameController = TextEditingController();
     showDialog(
@@ -232,7 +216,6 @@ class _EditProfileViewState extends State<EditProfileView> {
   }
 }
 
-// NEW: A dedicated widget for the profile selection dropdown.
 class _ProfileSelectorDropdown extends StatelessWidget {
   const _ProfileSelectorDropdown();
 
@@ -272,7 +255,6 @@ class _ProfileAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
-        // REFACTORED: Gets URL from the selected profile.
         final profilePictureUrl = state.selectedProfile?.profilePictureUrl;
 
         return Center(

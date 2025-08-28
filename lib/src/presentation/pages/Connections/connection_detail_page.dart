@@ -6,8 +6,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:connect/src/domain/models/user_profile.dart';
 import 'package:connect/src/domain/repositories/public_profile_repository.dart';
 
-// A simple Cubit to manage the state of this page.
-// A Cubit is a simpler version of a BLoC, perfect for simple cases like this.
 class ConnectionDetailCubit extends Cubit<List<UserProfile>?> {
   ConnectionDetailCubit(this._publicProfileRepository) : super(null);
 
@@ -15,11 +13,12 @@ class ConnectionDetailCubit extends Cubit<List<UserProfile>?> {
 
   Future<void> fetchConnectionProfiles(String userId) async {
     try {
-      final profiles =
-      await _publicProfileRepository.getPublicProfiles(userId: userId);
+      final profiles = await _publicProfileRepository.getPublicProfiles(
+        userId: userId,
+      );
       emit(profiles);
     } catch (_) {
-      emit([]); // Emit an empty list on error.
+      emit([]);
     }
   }
 }
@@ -52,9 +51,7 @@ class ConnectionDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(connectionName),
-      ),
+      appBar: AppBar(title: Text(connectionName)),
       body: BlocBuilder<ConnectionDetailCubit, List<UserProfile>?>(
         builder: (context, profiles) {
           if (profiles == null) {
@@ -62,10 +59,10 @@ class ConnectionDetailView extends StatelessWidget {
           }
           if (profiles.isEmpty) {
             return const Center(
-                child: Text('This user has not set up any profiles.'));
+              child: Text('This user has not set up any profiles.'),
+            );
           }
 
-          // We display the profiles in a list.
           return ListView.builder(
             padding: const EdgeInsets.all(8.0),
             itemCount: profiles.length,
@@ -79,8 +76,6 @@ class ConnectionDetailView extends StatelessWidget {
   }
 }
 
-// This is a read-only card to display a single profile.
-// It's very similar to the PublicProfilePage UI we built before.
 class _ProfileCard extends StatelessWidget {
   const _ProfileCard({required this.profile});
 
@@ -115,7 +110,7 @@ class _ProfileCard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              profile.name, // This is the profile name, e.g., "Work"
+              profile.name,
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
@@ -124,9 +119,10 @@ class _ProfileCard extends StatelessWidget {
               Text(
                 profile.title!,
                 style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w500),
+                  fontSize: 16,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w500,
+                ),
                 textAlign: TextAlign.center,
               ),
             const SizedBox(height: 4),
@@ -155,7 +151,7 @@ class _ProfileCard extends StatelessWidget {
                   );
                 }).toList(),
               ),
-            ]
+            ],
           ],
         ),
       ),

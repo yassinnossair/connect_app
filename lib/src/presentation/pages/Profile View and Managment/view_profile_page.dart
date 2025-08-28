@@ -2,34 +2,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_launcher/url_launcher.dart'; // NEW: Import url_launcher
+import 'package:url_launcher/url_launcher.dart';
 
-// NEW: Import the BLoCs and Repositories we need.
 import 'package:connect/src/presentation/bloc/profile/profile_bloc.dart';
 import 'package:connect/src/presentation/bloc/profile/profile_state.dart';
 
-// This page provides the ProfileBloc.
-// NEW CODE for all 3 files
 class ViewProfilePage extends StatelessWidget {
-  // Or ViewProfilePage, or QrCodePage
   const ViewProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // The BlocProvider is gone. We just return the View widget directly.
-    return const ViewProfileView(); // Or ViewProfileView, or QrCodeView
+    return const ViewProfileView();
   }
 }
 
-// This widget builds the UI based on the ProfileBloc's state.
 class ViewProfileView extends StatelessWidget {
   const ViewProfileView({super.key});
 
-  // Helper function to launch URLs safely.
   Future<void> _launchUrl(String urlString) async {
     final Uri url = Uri.parse(urlString);
     if (!await launchUrl(url)) {
-      // In a real app, you might show a SnackBar here.
       debugPrint('Could not launch $urlString');
     }
   }
@@ -41,7 +33,6 @@ class ViewProfileView extends StatelessWidget {
       backgroundColor: Colors.grey[100],
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
-          // Show a loading indicator while data is being fetched.
           if (state.selectedProfile == null) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -123,7 +114,6 @@ class ViewProfileView extends StatelessWidget {
                             children: profile.professionalLinks.map((link) {
                               return ElevatedButton(
                                 onPressed: () {
-                                  // NEW: Launch the URL when the button is pressed.
                                   if (link['url'] != null) {
                                     _launchUrl(link['url']!);
                                   }

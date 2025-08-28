@@ -28,16 +28,13 @@ class ForgotPasswordForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // The build method now returns the Container directly, with no BlocListener.
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Colors.blue.shade800,
-            Colors.blue.shade600,
-          ],
+          colors: [Colors.blue.shade800, Colors.blue.shade600],
         ),
       ),
       child: Center(
@@ -64,8 +61,9 @@ class ForgotPasswordForm extends StatelessWidget {
                   Text(
                     'Enter your email to receive a reset link.',
                     textAlign: TextAlign.center,
-                    style: theme.textTheme.titleMedium
-                        ?.copyWith(color: Colors.grey.shade600),
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: Colors.grey.shade600,
+                    ),
                   ),
                   const SizedBox(height: 32),
                   _EmailInput(),
@@ -90,16 +88,14 @@ class _EmailInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.email != current.email,
       builder: (context, state) {
         return TextField(
-          onChanged: (email) => context
-              .read<ForgotPasswordBloc>()
-              .add(ForgotPasswordEmailChanged(email)),
+          onChanged: (email) => context.read<ForgotPasswordBloc>().add(
+            ForgotPasswordEmailChanged(email),
+          ),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             labelText: 'Email',
             prefixIcon: const Icon(Icons.email_outlined),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
         );
       },
@@ -116,22 +112,22 @@ class _SubmitButton extends StatelessWidget {
         return state.status == ForgotPasswordStatus.loading
             ? const CircularProgressIndicator()
             : SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            onPressed: () {
-              context
-                  .read<ForgotPasswordBloc>()
-                  .add(ForgotPasswordSubmitted());
-            },
-            child: const Text('SEND RESET LINK'),
-          ),
-        );
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  onPressed: () {
+                    context.read<ForgotPasswordBloc>().add(
+                      ForgotPasswordSubmitted(),
+                    );
+                  },
+                  child: const Text('SEND RESET LINK'),
+                ),
+              );
       },
     );
   }
@@ -142,7 +138,6 @@ class _BackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        // Use go_router to navigate back to the login page.
         context.go('/login');
       },
       child: const Text('Back to Login'),

@@ -2,24 +2,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qr_flutter/qr_flutter.dart'; // NEW: Import qr_flutter
+import 'package:qr_flutter/qr_flutter.dart';
 
-// NEW: Import the BLoCs and Repositories we need.
 import 'package:connect/src/presentation/bloc/auth/auth_bloc.dart';
 import 'package:connect/src/presentation/bloc/auth/auth_state.dart';
 import 'package:connect/src/presentation/bloc/profile/profile_bloc.dart';
 import 'package:connect/src/presentation/bloc/profile/profile_state.dart';
 
-// The page is now wrapped in a BlocProvider to create the ProfileBloc.
-// NEW CODE for all 3 files
 class QrCodePage extends StatelessWidget {
-  // Or ViewProfilePage, or QrCodePage
   const QrCodePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // The BlocProvider is gone. We just return the View widget directly.
-    return const QrCodeView(); // Or ViewProfileView, or QrCodeView
+    return const QrCodeView();
   }
 }
 
@@ -31,18 +26,14 @@ class QrCodeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('My QR Code')),
       backgroundColor: Colors.grey[200],
-      // We use a BlocBuilder on the AuthBloc to get the user's ID.
+
       body: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, authState) {
-          // We ensure the user is authenticated before proceeding.
           if (authState is! Authenticated) {
-            // This should technically not happen due to our router rules,
-            // but it's a good safeguard.
             return const Center(child: Text('Error: User not authenticated.'));
           }
           final userId = authState.user.uid;
 
-          // We use another BlocBuilder on the ProfileBloc to get the active profile.
           return BlocBuilder<ProfileBloc, ProfileState>(
             builder: (context, profileState) {
               if (profileState.status == ProfileStatus.loading) {
@@ -52,9 +43,6 @@ class QrCodeView extends StatelessWidget {
                 return const Center(child: Text('No active profile found.'));
               }
 
-              // Construct the public URL.
-              // IMPORTANT: Replace 'your-project-id.web.app' with your actual
-              // Firebase project ID once you deploy the web app.
               final publicUrl = 'https://connect-final-199ec.web.app/p/$userId';
               final activeProfileName = profileState.selectedProfile!.name;
 
@@ -87,7 +75,7 @@ class QrCodeView extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 32),
-                          // UPDATED: This now uses the QrImageView to display the live code.
+
                           Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
@@ -102,13 +90,13 @@ class QrCodeView extends StatelessWidget {
                               data: publicUrl,
                               version: QrVersions.auto,
                               size: 250.0,
-                              gapless: false, // Recommended for better scanning
+                              gapless: false,
                             ),
                           ),
                           const SizedBox(height: 24),
                           const Divider(),
                           const SizedBox(height: 16),
-                          // UPDATED: Displays the name of the currently active profile.
+
                           Text(
                             "Sharing '$activeProfileName' Profile",
                             style: Theme.of(context).textTheme.titleMedium,

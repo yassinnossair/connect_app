@@ -28,16 +28,13 @@ class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // The build method now returns the Container directly.
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Colors.blue.shade800,
-            Colors.blue.shade600,
-          ],
+          colors: [Colors.blue.shade800, Colors.blue.shade600],
         ),
       ),
       child: Center(
@@ -63,8 +60,9 @@ class LoginForm extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     'Welcome back!',
-                    style: theme.textTheme.titleMedium
-                        ?.copyWith(color: Colors.grey.shade600),
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: Colors.grey.shade600,
+                    ),
                   ),
                   const SizedBox(height: 32),
                   _EmailInput(),
@@ -98,9 +96,7 @@ class _EmailInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Email',
             prefixIcon: const Icon(Icons.email_outlined),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
         );
       },
@@ -121,9 +117,7 @@ class _PasswordInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Password',
             prefixIcon: const Icon(Icons.lock_outline),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
         );
       },
@@ -131,7 +125,6 @@ class _PasswordInput extends StatelessWidget {
   }
 }
 
-// Add this new widget class inside your login_page.dart file
 class _ForgotPasswordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -139,7 +132,6 @@ class _ForgotPasswordButton extends StatelessWidget {
       alignment: Alignment.centerRight,
       child: TextButton(
         onPressed: () {
-          // This will now navigate to the forgot password page
           context.go('/forgot-password');
         },
         child: const Text('Forgot Password?'),
@@ -157,28 +149,26 @@ class _LoginButton extends StatelessWidget {
         return state.status == LoginStatus.loading
             ? const CircularProgressIndicator()
             : SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            onPressed: () {
-              context
-                  .read<LoginBloc>()
-                  .add(LoginWithEmailAndPasswordPressed());
-            },
-            child: const Text('LOGIN'),
-          ),
-        );
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  onPressed: () {
+                    context.read<LoginBloc>().add(
+                      LoginWithEmailAndPasswordPressed(),
+                    );
+                  },
+                  child: const Text('LOGIN'),
+                ),
+              );
       },
     );
   }
 }
-
-
 
 class _SignUpButton extends StatelessWidget {
   @override
@@ -186,7 +176,6 @@ class _SignUpButton extends StatelessWidget {
     final theme = Theme.of(context);
     return TextButton(
       onPressed: () {
-        // Use go_router to navigate to the sign-up page.
         context.go('/signup');
       },
       child: RichText(

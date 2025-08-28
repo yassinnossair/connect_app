@@ -7,14 +7,12 @@ class PublicProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // This page is designed to look good on the web, so we give it a
-    // background color and center the content.
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
-          // We constrain the width to make it look better on wide screens (desktops).
+
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 500),
             child: Card(
@@ -31,13 +29,12 @@ class PublicProfilePage extends StatelessWidget {
                     const CircleAvatar(
                       radius: 70,
                       backgroundImage: NetworkImage(
-                        // A placeholder image URL.
                         'https://i.pravatar.cc/300',
                       ),
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      'Yassin Eldeeb', // Placeholder Name
+                      'Yassin Eldeeb',
                       style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
@@ -46,7 +43,7 @@ class PublicProfilePage extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Flutter Developer Intern', // Placeholder Title
+                      'Flutter Developer Intern',
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.blue,
@@ -56,17 +53,14 @@ class PublicProfilePage extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     const Text(
-                      'ConnectSphere Inc.', // Placeholder Company
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black54,
-                      ),
+                      'ConnectSphere Inc.',
+                      style: TextStyle(fontSize: 16, color: Colors.black54),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 24),
                     const Divider(),
                     const SizedBox(height: 16),
-                    // Placeholder professional links.
+
                     _buildLinksSection(context),
                   ],
                 ),
@@ -78,9 +72,7 @@ class PublicProfilePage extends StatelessWidget {
     );
   }
 
-  // Helper widget to build the links section.
   Widget _buildLinksSection(BuildContext context) {
-    // Placeholder list of links.
     final List<Map<String, String>> links = [
       {'type': 'LinkedIn', 'url': 'https://linkedin.com'},
       {'type': 'GitHub', 'url': 'https://github.com'},
@@ -96,12 +88,11 @@ class PublicProfilePage extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 16),
-        // The Wrap widget arranges its children in rows or columns, wrapping
-        // to the next line if there isn't enough space. Perfect for buttons.
+
         Wrap(
           alignment: WrapAlignment.center,
-          spacing: 12.0, // Horizontal space between buttons
-          runSpacing: 8.0, // Vertical space between rows of buttons
+          spacing: 12.0,
+          runSpacing: 8.0,
           children: links.map((link) {
             return ElevatedButton(
               onPressed: () {

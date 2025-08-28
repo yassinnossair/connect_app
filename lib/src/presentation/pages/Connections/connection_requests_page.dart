@@ -18,48 +18,46 @@ class _ConnectionRequestsPageState extends State<ConnectionRequestsPage> {
   @override
   void initState() {
     super.initState();
-    context
-        .read<ConnectionBloc>()
-        .add(IncomingRequestsSubscriptionRequested());
+    context.read<ConnectionBloc>().add(IncomingRequestsSubscriptionRequested());
   }
 
   @override
   Widget build(BuildContext context) {
-
     return BlocListener<ConnectionBloc, ConnectionState>(
-      // Add this BlocListener
-        listener: (context, state) {
-          if (state.status == ConnectionStatus.failure) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Text(state.errorMessage ?? 'An unknown error occurred.'),
-                  backgroundColor: Colors.red,
+      listener: (context, state) {
+        if (state.status == ConnectionStatus.failure) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Text(
+                  state.errorMessage ?? 'An unknown error occurred.',
                 ),
-              );
-          }
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Connection Requests'),
-          ),
-          body: BlocBuilder<ConnectionBloc, ConnectionState>(
-            builder: (context, state) {
-              if (state.status == ConnectionStatus.loading && state.incomingRequests.isEmpty) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (state.status == ConnectionStatus.failure && state.incomingRequests.isEmpty) {
-                return const Center(child: Text('Failed to load requests.'));
-              }
-              if (state.incomingRequests.isEmpty) {
-                return const _NoRequestsView();
-              } else {
-                return _RequestsListView(requests: state.incomingRequests);
-              }
-            },
-          ),
+                backgroundColor: Colors.red,
+              ),
+            );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Connection Requests')),
+        body: BlocBuilder<ConnectionBloc, ConnectionState>(
+          builder: (context, state) {
+            if (state.status == ConnectionStatus.loading &&
+                state.incomingRequests.isEmpty) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (state.status == ConnectionStatus.failure &&
+                state.incomingRequests.isEmpty) {
+              return const Center(child: Text('Failed to load requests.'));
+            }
+            if (state.incomingRequests.isEmpty) {
+              return const _NoRequestsView();
+            } else {
+              return _RequestsListView(requests: state.incomingRequests);
+            }
+          },
         ),
+      ),
     );
   }
 }
@@ -86,9 +84,9 @@ class _NoRequestsView extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             'You have no pending connection requests.',
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Colors.grey.shade600,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(color: Colors.grey.shade600),
           ),
         ],
       ),
@@ -149,22 +147,21 @@ class _RequestCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                // UPDATED: Decline button now dispatches an event.
                 TextButton(
                   onPressed: () {
-                    context
-                        .read<ConnectionBloc>()
-                        .add(ConnectionRequestDeclined(requestId: request.id));
+                    context.read<ConnectionBloc>().add(
+                      ConnectionRequestDeclined(requestId: request.id),
+                    );
                   },
                   child: const Text('DECLINE'),
                 ),
                 const SizedBox(width: 8),
-                // UPDATED: Accept button now dispatches an event.
+
                 ElevatedButton(
                   onPressed: () {
-                    context
-                        .read<ConnectionBloc>()
-                        .add(ConnectionRequestAccepted(request: request));
+                    context.read<ConnectionBloc>().add(
+                      ConnectionRequestAccepted(request: request),
+                    );
                   },
                   child: const Text('ACCEPT'),
                 ),

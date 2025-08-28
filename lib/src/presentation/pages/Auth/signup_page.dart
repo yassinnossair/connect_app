@@ -28,16 +28,13 @@ class SignUpForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // The build method now returns the Container directly, with no BlocListener.
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Colors.blue.shade800,
-            Colors.blue.shade600,
-          ],
+          colors: [Colors.blue.shade800, Colors.blue.shade600],
         ),
       ),
       child: Center(
@@ -63,8 +60,9 @@ class SignUpForm extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     'Join ConnectSphere today!',
-                    style: theme.textTheme.titleMedium
-                        ?.copyWith(color: Colors.grey.shade600),
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: Colors.grey.shade600,
+                    ),
                   ),
                   const SizedBox(height: 32),
                   _EmailInput(),
@@ -99,9 +97,7 @@ class _EmailInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Email',
             prefixIcon: const Icon(Icons.email_outlined),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
         );
       },
@@ -122,9 +118,7 @@ class _PasswordInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Password',
             prefixIcon: const Icon(Icons.lock_outline),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
         );
       },
@@ -137,19 +131,17 @@ class _ConfirmPasswordInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SignUpBloc, SignUpState>(
       buildWhen: (previous, current) =>
-      previous.confirmPassword != current.confirmPassword,
+          previous.confirmPassword != current.confirmPassword,
       builder: (context, state) {
         return TextField(
-          onChanged: (password) => context
-              .read<SignUpBloc>()
-              .add(SignUpConfirmPasswordChanged(password)),
+          onChanged: (password) => context.read<SignUpBloc>().add(
+            SignUpConfirmPasswordChanged(password),
+          ),
           obscureText: true,
           decoration: InputDecoration(
             labelText: 'Confirm Password',
             prefixIcon: const Icon(Icons.lock_outline),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
         );
       },
@@ -166,20 +158,20 @@ class _SignUpButton extends StatelessWidget {
         return state.status == SignUpStatus.loading
             ? const CircularProgressIndicator()
             : SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            onPressed: () {
-              context.read<SignUpBloc>().add(SignUpSubmitted());
-            },
-            child: const Text('SIGN UP'),
-          ),
-        );
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  onPressed: () {
+                    context.read<SignUpBloc>().add(SignUpSubmitted());
+                  },
+                  child: const Text('SIGN UP'),
+                ),
+              );
       },
     );
   }
@@ -191,7 +183,6 @@ class _LoginButton extends StatelessWidget {
     final theme = Theme.of(context);
     return TextButton(
       onPressed: () {
-        // Use go_router to navigate back to the login page.
         context.go('/login');
       },
       child: RichText(

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart'; // NEW: Import go_router
+import 'package:go_router/go_router.dart';
 import 'package:connect/src/domain/models/connection.dart';
 import 'package:connect/src/presentation/bloc/connection/connection_bloc.dart';
 import 'package:connect/src/presentation/bloc/connection/connection_event.dart';
@@ -25,15 +25,15 @@ class _MyConnectionsPageState extends State<MyConnectionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Connections'),
-      ),
+      appBar: AppBar(title: const Text('My Connections')),
       body: BlocBuilder<ConnectionBloc, ConnectionState>(
         builder: (context, state) {
-          if (state.status == ConnectionStatus.loading && state.connections.isEmpty) {
+          if (state.status == ConnectionStatus.loading &&
+              state.connections.isEmpty) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (state.status == ConnectionStatus.failure && state.connections.isEmpty) {
+          if (state.status == ConnectionStatus.failure &&
+              state.connections.isEmpty) {
             return const Center(child: Text('Failed to load connections.'));
           }
           if (state.connections.isEmpty) {
@@ -56,11 +56,7 @@ class _NoConnectionsView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.people_outline,
-            size: 80,
-            color: Colors.grey[400],
-          ),
+          Icon(Icons.people_outline, size: 80, color: Colors.grey[400]),
           const SizedBox(height: 16),
           Text(
             'No Connections Yet',
@@ -69,9 +65,9 @@ class _NoConnectionsView extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             'Scan a QR code to start connecting.',
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Colors.grey.shade600,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(color: Colors.grey.shade600),
           ),
         ],
       ),
@@ -121,9 +117,8 @@ class _ConnectionCard extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         trailing: const Icon(Icons.chevron_right),
-        // UPDATED: This now navigates to the detail page.
+
         onTap: () {
-          // We use context.push to navigate, passing the user's ID as an extra parameter.
           context.push(
             '/connection-detail',
             extra: {

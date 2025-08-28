@@ -16,10 +16,11 @@ class ScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // We provide the ConnectionBloc here for this specific page.
     return BlocProvider(
       create: (context) => ConnectionBloc(
-        connectionRepository: RepositoryProvider.of<ConnectionRepository>(context),
+        connectionRepository: RepositoryProvider.of<ConnectionRepository>(
+          context,
+        ),
         profileBloc: context.read<ProfileBloc>(),
         authRepository: RepositoryProvider.of<AuthRepository>(context),
       ),
@@ -46,7 +47,6 @@ class _ScanViewState extends State<ScanView> {
     super.dispose();
   }
 
-  // THIS FUNCTION IS NOW CORRECT
   String? _extractUserIdFromUrl(String url) {
     const prefix = 'https://connect-final-199ec.web.app/p/';
     if (url.startsWith(prefix)) {
@@ -66,7 +66,9 @@ class _ScanViewState extends State<ScanView> {
     });
     if (scannedUserId != null) {
       _lastScannedUserId = scannedUserId;
-      context.read<ConnectionBloc>().add(ConnectionRequestSent(targetUserId: scannedUserId));
+      context.read<ConnectionBloc>().add(
+        ConnectionRequestSent(targetUserId: scannedUserId),
+      );
     } else {
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
@@ -104,7 +106,9 @@ class _ScanViewState extends State<ScanView> {
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
-                content: Text('Error: ${state.errorMessage ?? 'Could not send request.'}'),
+                content: Text(
+                  'Error: ${state.errorMessage ?? 'Could not send request.'}',
+                ),
                 backgroundColor: Colors.red,
               ),
             );
@@ -119,7 +123,11 @@ class _ScanViewState extends State<ScanView> {
               icon: ValueListenableBuilder(
                 valueListenable: cameraController,
                 builder: (context, state, child) {
-                  return Icon(state.torchState == TorchState.on ? Icons.flash_on : Icons.flash_off);
+                  return Icon(
+                    state.torchState == TorchState.on
+                        ? Icons.flash_on
+                        : Icons.flash_off,
+                  );
                 },
               ),
               onPressed: () => cameraController.toggleTorch(),
@@ -149,15 +157,29 @@ class _ScanViewState extends State<ScanView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Align QR code within the frame', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text(
+            'Align QR code within the frame',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           const SizedBox(height: 20),
-          Container(height: 250, width: 250, decoration: BoxDecoration(border: Border.all(color: Colors.white, width: 4), borderRadius: BorderRadius.circular(12))),
+          Container(
+            height: 250,
+            width: 250,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white, width: 4),
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
           const SizedBox(height: 20),
           if (kDebugMode)
             ElevatedButton(
               onPressed: () {
-                // THIS BUTTON IS NOW CORRECT
-                const testUrl = 'https://connect-final-199ec.web.app/p/pU4fVM6oxlf2ZGpGkB7yWAFnRmG3';
+                const testUrl =
+                    'https://connect-final-199ec.web.app/p/pU4fVM6oxlf2ZGpGkB7yWAFnRmG3';
                 _handleScan(testUrl);
               },
               child: const Text('Simulate Scan (For Dev)'),

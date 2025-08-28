@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 12),
             _buildHomeButton(
               context: context,
-              icon: Icons.visibility_outlined, // A suitable icon for viewing
+              icon: Icons.visibility_outlined,
               label: 'Preview My Profile',
               onPressed: () => context.push('/view-profile'),
             ),
@@ -76,12 +76,12 @@ class HomePage extends StatelessWidget {
               label: 'Connection Requests',
               onPressed: () => context.push('/requests'),
             ),
-            const Spacer(), // Pushes the scan button to the bottom
+            const Spacer(),
             _buildHomeButton(
               context: context,
               icon: Icons.qr_code_scanner,
               label: 'Scan to Connect',
-              isPrimary: true, // Make this button stand out
+              isPrimary: true,
               onPressed: () => context.push('/scan'),
             ),
             const SizedBox(height: 16),
