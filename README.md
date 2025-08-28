@@ -26,7 +26,7 @@ The application is built around four core epics, providing a complete and intuit
 ### **Epic 2: Profile Management**
 - **Multiple Profiles**: Users can create and manage multiple professional profiles (e.g., "Work," "Freelance") to suit different networking contexts.
 - **Rich Profile Details**: Each profile can be customized with a name, title, company, profile picture, and links to professional networks like LinkedIn or GitHub.
-- **Instant Cloud Sync**: All profile updates are saved instantly to the cloud and are reflected across all devices in real-time.
+
 
 ### **Epic 3: Contact Exchange**
 - **QR Code Sharing**: Each user has a unique QR code that links to their profile. This code can be displayed for others to scan.
