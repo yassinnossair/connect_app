@@ -82,21 +82,21 @@ Connect is a full-stack application leveraging Flutter for the frontend and Fire
 
 The Firestore database is structured to be scalable and efficient, using a combination of top-level collections and sub-collections.
 
-/users/{userId}/
-  ├── profiles/{profileId}  // A user's professional profiles
-  │     ├── id: "profileId"
-  │     ├── name: "Work"
-  │     └── ...
-  │
-  └── connections/{connectionId} // A user's established connections
-        ├── id: "connectionId"
-        ├── otherUserId: "otherUserId"
-        ├── otherUserName: "John Doe"
-        └── ...
+* `/users/{userId}/`
+    * `profiles/{profileId}`: A sub-collection for a user's professional profiles.
+        * `id: "profileId"`
+        * `name: "Work"`
+        * `title: "Software Engineer"`
+        * `...`
+    * `connections/{connectionId}`: A sub-collection for a user's established connections.
+        * `id: "connectionId"`
+        * `otherUserId: "otherUserId"`
+        * `otherUserName: "John Doe"`
+        * `...`
 
-/connection_requests/{requestId}/ // All pending connection requests
-  ├── id: "requestId"
-  ├── fromUserId: "senderId"
-  ├── toUserId: "receiverId"
-  ├── status: "pending" | "accepted" | "declined"
-  └── ...
+* `/connection_requests/{requestId}/`: A top-level collection for all connection requests.
+    * `id: "requestId"`
+    * `fromUserId: "senderId"`
+    * `toUserId: "receiverId"`
+    * `status: "pending" | "accepted" | "declined"`
+    * `...`
