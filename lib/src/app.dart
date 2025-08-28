@@ -27,11 +27,11 @@ class App extends StatelessWidget {
         RepositoryProvider<AuthRepository>(
           create: (context) => AuthRepositoryImpl(),
         ),
-        // Define ProfileRepository first...
+
         RepositoryProvider<ProfileRepository>(
           create: (context) => ProfileRepositoryImpl(),
         ),
-        // ...then define ConnectionRepository, which depends on it.
+
         RepositoryProvider<ConnectionRepository>(
           create: (context) => ConnectionRepositoryImpl(),
         ),
@@ -60,7 +60,7 @@ class App extends StatelessWidget {
                 context,
               ),
               profileBloc: context.read<ProfileBloc>(),
-              // UPDATED: Add the missing required argument.
+
               authRepository: RepositoryProvider.of<AuthRepository>(context),
             ),
           ),
