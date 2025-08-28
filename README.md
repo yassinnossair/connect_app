@@ -6,7 +6,7 @@ Connect is a full-stack, cross-platform application designed to modernize profes
 
 ---
 
-## **Live Demo** 🚀
+## **Live Demo** 
 
 You can try the live web version of the application here:
 
@@ -14,7 +14,7 @@ You can try the live web version of the application here:
 
 ---
 
-## **Features** ✨
+## **Features** 
 
 The application is built around four core epics, providing a complete and intuitive user journey.
 
@@ -41,7 +41,7 @@ The application is built around four core epics, providing a complete and intuit
 
 
 
-## **Technical Architecture** 🏗️
+## **Technical Architecture** 
 
 Connect is a full-stack application leveraging Flutter for the frontend and Firebase for the backend. The project follows a clean, multi-layered architecture to ensure a clear separation of concerns, making the codebase scalable and maintainable.
 
@@ -60,7 +60,7 @@ Connect is a full-stack application leveraging Flutter for the frontend and Fire
 
 ---
 
-## **Technology Stack** 🛠️
+## **Technology Stack** 
 
 ### **Core Framework & Services**
 - **Framework**: Flutter
@@ -78,7 +78,7 @@ Connect is a full-stack application leveraging Flutter for the frontend and Fire
 
 ---
 
-## **Firestore Data Structure** 🗂️
+## **Firestore Data Structure** 
 
 The Firestore database is structured to be scalable and efficient, using a combination of top-level collections and sub-collections.
 
