@@ -1,4 +1,4 @@
-# **Connect: A Cloud-Native Networking Platform** 🌐
+# **Connect: A Networking Platform** 
 
 
 
