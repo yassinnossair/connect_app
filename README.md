@@ -39,11 +39,7 @@ The application is built around four core epics, providing a complete and intuit
 
 ---
 
-## **Screenshots & Demo** 📸
 
-*(Here you can add screenshots or GIFs of the app in action)*
-
----
 
 ## **Technical Architecture** 🏗️
 
